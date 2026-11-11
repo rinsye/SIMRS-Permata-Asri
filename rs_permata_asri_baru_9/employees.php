@@ -1,0 +1,64 @@
+<?php
+require_once __DIR__ . '/includes/functions.php';
+$user = require_login();
+require_permission($user, 'employees.manage');
+$pageTitle = 'Data Pegawai';
+
+$roles = db()->query('SELECT id, name FROM roles ORDER BY name')->fetchAll();
+$units = db()->query('SELECT id, code, name FROM units ORDER BY name')->fetchAll();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    check_csrf();
+    $employeeId = (int)($_POST['employee_id'] ?? 0);
+    $code = trim($_POST['employee_code'] ?? '');
+    $name = trim($_POST['full_name'] ?? '');
+    $profession = trim($_POST['profession'] ?? '');
+    $roleId = (int) ($_POST['role_id'] ?? 0);
+    $unitId = (int) ($_POST['unit_id'] ?? 0);
+
+    if ($code === '' || $name === '' || $profession === '' || !$roleId) {
+        flash('error', 'ID pegawai, nama, profesi, dan role wajib diisi.');
+        redirect('employees.php');
+    }
+
+    try {
+        if ($employeeId > 0) {
+            $stmt=db()->prepare('UPDATE employees SET full_name=?, profession=?, role_id=?, unit_id=? WHERE id=? AND employee_code=?');
+            $stmt->execute([$name,$profession,$roleId,$unitId ?: null,$employeeId,$code]);
+            if (!$stmt->rowCount()) throw new RuntimeException('Pegawai tidak ditemukan atau data tidak berubah.');
+        } else {
+            $stmt = db()->prepare('INSERT INTO employees (employee_code, full_name, profession, role_id, unit_id, is_active) VALUES (?, ?, ?, ?, ?, 1)');
+            $stmt->execute([$code, $name, $profession, $roleId, $unitId ?: null]);
+        }
+        flash('success', 'Data pegawai berhasil ditambahkan.');
+    } catch (Throwable $e) {
+        flash('error', 'ID pegawai sudah digunakan atau data tidak valid.');
+    }
+    redirect('employees.php');
+}
+
+$rows = db()->query(
+    'SELECT e.id,e.employee_code, e.full_name, e.profession,e.role_id,e.unit_id, r.name AS role_name, un.name AS unit_name
+     FROM employees e
+     JOIN roles r ON r.id = e.role_id
+     LEFT JOIN units un ON un.id = e.unit_id
+     ORDER BY e.id DESC'
+)->fetchAll();
+
+require __DIR__ . '/includes/header.php';
+?>
+<h1 class="page-title">Data Pegawai</h1>
+<p class="page-subtitle">Data dokter sekarang menjadi data pegawai dengan ID, profesi, role, dan unit kerja.</p>
+<div class="grid grid-2">
+  <div class="card"><h2 class="section-title">Tambah Pegawai</h2><form method="POST"><input type="hidden" name="csrf_token" value="<?=e(csrf_token())?>"><input type="hidden" name="employee_id" id="staff-edit-id" value="">
+    <div class="field"><label>ID / Kode Pegawai</label><input class="input" id="staff-edit-code" name="employee_code" placeholder="PEG-DOK-003" required></div>
+    <div class="field"><label>Nama Pegawai</label><input class="input" id="staff-edit-name" name="full_name" required></div>
+    <div class="field"><label>Profesi</label><input class="input" id="staff-edit-profession" name="profession" placeholder="Dokter, Perawat, ATLM, Radiografer" required></div>
+    <div class="field"><label>Role</label><select class="input" id="staff-edit-role" name="role_id" required><option value="">-- Pilih Role --</option><?php foreach($roles as $r): ?><option value="<?= $r['id'] ?>"><?= e($r['name']) ?></option><?php endforeach; ?></select></div>
+    <div class="field"><label>Unit</label><select class="input" id="staff-edit-unit" name="unit_id"><option value="">-- Pilih Unit --</option><?php foreach($units as $u): ?><option value="<?= $u['id'] ?>"><?= e($u['code'].' - '.$u['name']) ?></option><?php endforeach; ?></select></div>
+    <button class="btn btn-primary">Simpan Pegawai</button>
+  </form><p class="note">Untuk mengedit nama pegawai simulasi, klik Edit pada baris pegawai. Jangan gunakan identitas DEMO untuk rekam medis nyata.</p></div>
+  <div class="table-wrap"><table><thead><tr><th>ID Pegawai</th><th>Nama</th><th>Profesi</th><th>Role / Unit</th><th>Aksi</th></tr></thead><tbody><?php foreach($rows as $r): ?><tr><td><b><?= e($r['employee_code']) ?></b></td><td><?= e($r['full_name']) ?></td><td><?= e($r['profession']) ?></td><td><?= e($r['role_name']) ?><br><small><?= e($r['unit_name'] ?? '-') ?></small></td><td><button type="button" class="btn btn-secondary btn-sm" data-staff='<?=e(json_encode($r,JSON_UNESCAPED_UNICODE))?>' onclick="editStaff(this)">Edit</button></td></tr><?php endforeach; ?></tbody></table></div>
+</div>
+<script>function editStaff(button){const s=JSON.parse(button.dataset.staff);document.getElementById('staff-edit-id').value=s.id;document.getElementById('staff-edit-code').value=s.employee_code;document.getElementById('staff-edit-code').readOnly=true;document.getElementById('staff-edit-name').value=s.full_name;document.getElementById('staff-edit-profession').value=s.profession;document.getElementById('staff-edit-role').value=s.role_id;document.getElementById('staff-edit-unit').value=s.unit_id||'';window.scrollTo({top:0,behavior:'smooth'});}</script>
+<?php require __DIR__ . '/includes/footer.php'; ?>

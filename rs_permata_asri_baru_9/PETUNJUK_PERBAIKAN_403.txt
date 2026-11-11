@@ -1,0 +1,27 @@
+PERBAIKAN ERROR 403 DASHBOARD (KHUSUS MAMP LOKAL)
+
+PENYEBAB YANG DITEMUKAN
+Role Farmasi memiliki farmasi.manage tetapi tidak mendapat dashboard.view,
+padahal login.php selalu mengarahkan pengguna ke dashboard.php.
+
+CARA MEMASANG
+1. Backup folder proyek serta database terlebih dahulu.
+2. Ekstrak ZIP dan salin isi folder rs_permata_asri_baru ke folder proyek aktif
+   di /Applications/MAMP/htdocs/. Pastikan folder yang diganti benar-benar
+   folder yang dibuka dari browser.
+3. Jangan impor ulang database/simrs_permata_asri.sql.
+4. Pastikan MAMP Apache dan MySQL aktif.
+5. Logout dan login kembali, kemudian buka Dashboard dan menu Farmasi.
+
+PERUBAHAN
+includes/schema_v5.php: tambah dashboard.view untuk semua role aktif
+secara idempotent. Tidak memberi akses edit EMR, triase, atau order dokter.
+
+JIKA MASIH 403
+Perhatikan alamat URL saat 403 muncul, serta akun/role yang digunakan.
+403 pada halaman lain dapat berarti role memang tidak berwenang.
+Laporkan URL halaman, role akun, dan nama folder proyek MAMP.
+
+CATATAN KEAMANAN
+Pengujian end-to-end pada MariaDB/MAMP pengguna tidak dapat dilakukan
+di sini. Perubahan ini ditujukan untuk sistem uji, bukan produksi.

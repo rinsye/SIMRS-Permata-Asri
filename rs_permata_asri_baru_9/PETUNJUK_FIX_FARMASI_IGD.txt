@@ -1,0 +1,18 @@
+SIMRS PERMATA ASRI - PERBAIKAN KEDALUWARSA DAN PENJELASAN KONEKSI IGD
+
+1. Backup folder proyek dan database MAMP.
+2. Ganti folder rs_permata_asri_baru dengan versi ZIP ini (pastikan config/database.php sesuai database aktif).
+3. Tidak perlu import ulang database awal atau migration_roles_unit_scope_2026.sql bila sudah pernah diimport.
+4. Buka Farmasi dengan akun farmasi_nadia; kini ada form "Lengkapi / Perbarui Tanggal Kedaluwarsa".
+5. Pilih obat, isi tanggal dari label kemasan asli, klik Simpan.
+6. Admin hanya melihat kolom tanggal dan peringatan; tidak dapat mengubah tanggal.
+7. Akun dokter_igd berunit IGD, sedangkan akun triage merupakan perawat IGD.
+   Keduanya melihat data melalui penugasan unit/kunjungan IGD, bukan relasi eksklusif per orang.
+8. Jalankan database/AUDIT_IGD_DAN_KEDALUWARSA.sql untuk audit relasi IGD dan tanggal kosong.
+
+PENTING: SQL inisialisasi obat tidak berisi tanggal kedaluwarsa yang sebenarnya.
+Sistem tidak menebak tanggal tersebut. Obat yang belum memiliki tanggal diberi status
+Tanggal belum diisi, bukan Aman. Nama file ini adalah petunjuk pemasangan, bukan migrasi.
+
+VALIDASI: Pemeriksaan sintaks PHP dapat dilakukan dengan php -l farmasi.php.
+Uji login dan penyimpanan di MariaDB MAMP tetap harus dilakukan pada instalasi lokal.

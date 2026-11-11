@@ -1,0 +1,41 @@
+WEEKLY PROGRESS — RS PERMATA ASRI SIMRS
+
+Update minggu ini:
+1. Prototype mulai dimigrasikan dari hardcode/localStorage menjadi PHP + MariaDB menggunakan XAMPP.
+2. Login dan RBAC sudah membaca akun, role, permission, serta menu dari database.
+3. Ditambahkan popup konfirmasi logout (Ya/Tidak).
+4. Menu User diubah menjadi User Registration.
+5. Data Dokter diubah menjadi Data Pegawai dengan ID/kode pegawai, profesi, role, dan unit.
+6. Ditambahkan halaman Patient Registration untuk data pasien, poli, dokter tujuan, jadwal, penjaminan, keluhan, dan antrean.
+7. EMR mulai menyimpan siapa pemeriksa/pelaksana berdasarkan ID pegawai serta aktivitasnya.
+8. Laboratory dan Radiology sekarang menerima worklist berdasarkan order dokter dari CPOE.
+9. Triase, hasil Laboratory, dan Rawat Inap dapat disimpan ke database.
+10. Laporan operasional diubah agar tidak menampilkan kolom dokter.
+
+Screenshot yang disarankan:
+- Login Rumah Sakit Permata Asri.
+- User Registration (login admin).
+- Data Pegawai dengan kolom ID Pegawai, Role, Unit.
+- Patient Registration.
+- EMR dengan dropdown pemeriksa ID pegawai.
+- CPOE order Laboratorium oleh dokter.
+- Login Lab -> worklist memperlihatkan No. Order dan Dokter Peminta.
+- Popup konfirmasi Logout.
+
+Belum diselesaikan pada minggu ini:
+- Penambahan master obat lengkap dengan provider dan expiry date.
+- Dispensing Farmasi dan pengurangan stok otomatis.
+- Bed management lengkap.
+- Nursing lanjutan.
+- Billing lanjutan.
+- Audit trail lengkap.
+
+Hal-hal tersebut dapat dijadikan progress update berikutnya.
+
+UPDATE TAMBAHAN - REGISTRASI PASIEN ONLINE
+- Menambahkan halaman pendaftaran pasien publik tanpa login pegawai.
+- Pasien dapat mengisi data diri, memilih poli, dokter, jadwal, tanggal kunjungan, penjaminan, dan keluhan.
+- Pendaftaran publik masuk ke database dengan status "Menunggu Verifikasi".
+- Admin/Admisi mendapat menu "Registrasi Online" untuk melihat pendaftaran yang masuk.
+- Petugas dapat menyetujui atau menolak pendaftaran. Jika disetujui, sistem membuat/menemukan data pasien dan membuat registrasi rumah sakit beserta nomor antrean.
+- Halaman login pegawai sekarang memiliki tombol "Daftar sebagai Pasien".

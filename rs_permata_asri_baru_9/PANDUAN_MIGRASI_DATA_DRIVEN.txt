@@ -1,0 +1,35 @@
+RS PERMATA ASRI - REVISI DATABASE-DRIVEN (11 November 2026)
+
+PENTING: aplikasi sekarang TIDAK membuat data master atau akun otomatis pada saat login.
+Database MariaDB adalah sumber data utama pasien, kunjungan, DPJP, staf, jadwal, obat, tempat tidur, parameter lab, izin, dan penugasan perawat.
+
+UNTUK DATABASE LAMA (MAMP):
+1. BACKUP database simrs_permata_asri via phpMyAdmin > Export > SQL.
+2. BACKUP folder aplikasi htdocs.
+3. Pilih DB simrs_permata_asri, menu Import, file database/migration_data_driven_2026.sql.
+4. Setelah berhasil, salin file aplikasi terbaru ke htdocs (pertahankan konfigurasi koneksi lokal).
+5. Logout, login lagi, cek setiap role.
+6. Jalankan query pemeriksaan di database/AUDIT_QUERY_DATABASE.sql satu per satu.
+7. Periksa role_permissions, nurse_doctor_assignments, employees dan users agar sesuai penugasan nyata.
+
+UNTUK INSTALASI BARU:
+- database/simrs_permata_asri.sql berisi skema dan master awal (hanya untuk database KOSONG).
+- Jangan impor file database awal pada DB yang sudah ada: file awal bisa menghapus database/tabel sebelumnya.
+- Jika data awal perlu disesuaikan, gunakan SQL atau halaman pengelolaan sesuai izin.
+
+YANG DIPERBAIKI:
+- Obat, tempat tidur dan parameter lab tidak lagi diinisialisasi dari array PHP.
+- Dokter/jadwal/akun perawat tidak dibuat otomatis setiap login.
+- Password tidak direset otomatis, dan daftar password tidak tampil di layar login.
+- Tanggal kedaluwarsa obat tidak lagi diisi tanggal rekaan. NULL harus diisi dari catatan stok/batch aktual.
+- Tabel laboratorium membaca lab_test_panels, lab_panel_keywords, lab_panel_parameters.
+- Tabel perawat mengikuti nurse_doctor_assignments, pasien mengikuti registrations.
+- Hak akses dibaca dari role_permissions; pemeriksaan keamanan role tetap di kode sebagai logika otorisasi.
+
+CATATAN JUJUR:
+- Status, validasi, label antarmuka dan aturan hak akses adalah logika aplikasi, bukan data pasien hardcoded.
+- Database SQL awal MEMANG berisi baris CONTOH untuk instalasi baru. Itu data awal SQL, bukan data pasien di PHP.
+- File migrasi tidak menghapus, mengubah, atau mengganti registrasi/EMR milik pengguna yang sudah tersimpan.
+- Konfigurasi sambungan MAMP melalui SIMRS_DB_HOST, SIMRS_DB_PORT, SIMRS_DB_NAME, SIMRS_DB_USER, SIMRS_DB_PASS (default lokal saat variabel tidak tersedia).
+- Tidak ada pengujian langsung pada MariaDB MAMP pengguna dari lingkungan ini; lakukan tes SQL dan role di komputer pengguna.
+- Nilai rujukan lab di SQL adalah contoh historis dan harus ditinjau/verifikasi oleh laboratorium sebelum pemakaian klinis.

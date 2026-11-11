@@ -1,0 +1,16 @@
+RS PERMATA ASRI - PEMBARUAN AKSES ROLE DAN PASIEN
+
+1. Cadangkan folder aplikasi dan database MySQL/MariaDB sebelum mengganti file.
+2. Salin isi folder rs_permata_asri_baru ke direktori aplikasi di htdocs.
+3. Periksa host, port, username, password di config/database.php.
+4. Untuk database LAMA: login sebagai administrator. Migrasi tambahan tabel role/rujukan/penugasan berjalan otomatis saat login pertama. Data pasien lama tidak dihapus.
+5. Untuk database BARU: impor database/simrs_permata_asri.sql memakai phpMyAdmin. Jangan gunakan installer berbasis web (dinonaktifkan demi keamanan).
+6. Masuk sebagai administrator -> DATA MASTER -> Manajemen Role & Izin.
+7. Perawat poli: buat pegawai pada unit POLI, lalu daftarkan hubungan perawat-dokter melalui menu Penugasan Perawat Poli. Tanpa penugasan, daftar pasien poli kosong (default deny).
+8. Dokter yang mendapatkan rujukan pasien: administrator mencatat rujukan pada Manajemen Role. Akses ke riwayat dapat dicabut.
+9. Akun dokter poli umum tidak mendapat menu Rawat Inap. Pendaftaran Pasien dan Laporan Operasional hanya administrator.
+10. Pembatasan pasien diperiksa di server untuk modul EMR, CPOE dan Rawat Inap. Riwayat dokter meliputi kunjungan lama pasiennya, termasuk entri oleh dokter lain; pengubahan EMR hanya untuk kunjungan yang ditugaskan kepadanya.
+11. Status CPOE: Menunggu biru, Dalam Proses kuning, Selesai hijau.
+12. Pengujian: jalankan PHP lint (sudah dilakukan). Pengujian integrasi database dan login nyata masih perlu dilakukan pada server Anda karena database lokal tidak disertakan.
+
+CATATAN KEAMANAN: Sistem ini merupakan pengembangan proyek yang diberikan, bukan sertifikasi keamanan SIMRS produksi. Sebelum dipakai dengan data pasien nyata, lakukan pengujian akses per endpoint, audit keamanan, perlindungan CSRF pada seluruh form, pencatatan akses data medis, pengetesan unit dan penguatan konfigurasi server.

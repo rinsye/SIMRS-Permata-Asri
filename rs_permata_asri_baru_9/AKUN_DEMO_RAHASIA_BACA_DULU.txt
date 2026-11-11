@@ -1,0 +1,19 @@
+AKUN DEMONSTRASI — HANYA DATABASE PENGUJIAN. JANGAN GUNAKAN UNTUK PASIEN NYATA.
+Password di SQL hanya hash bcrypt, daftar di bawah adalah password awal. Ubah semua password dan hapus file ini sebelum penggunaan nyata.
+Akun yang sudah ada (misal dokter, novella, perawat) tidak diganti.
+
+dokter_maya | PEG-DOK-002 | SmIQXm8atoU8k8#5Zm
+dokter_raka | PEG-DOK-003 | 5Om!jM7N7QK#x3mDfg
+dokter_nadia | PEG-DOK-004 | UV!JhN6aqe1D!b11Wm
+dokter_salsabila | PEG-DOK-005 | JwyXAFVfB6Uhxsx#jx
+dokter_bima | PEG-DOK-006 | pouf!Ws3Al4LB0SLNy
+dokter_citra | PEG-DOK-007 | 9MNVzob5q8BiJ6wq31
+dokter_igd | PEG-DOK-IGD-001 | TEOPnU7B!foRQDmtFY
+farmasi_nadia | PEG-FAR-001 | IpJGrOPDSE9810063W
+nurse_poli_1 | PEG-DOK-001 | JRwlwtsz8CYWUFDH2U
+nurse_poli_2 | PEG-DOK-002 | gPPJSutedWGWIa!Ce0
+nurse_poli_3 | PEG-DOK-003 | 3oX9mHd6SFo@cFPbBK
+nurse_poli_4 | PEG-DOK-004 | LPmomLcZmH8zB7pUtF
+nurse_poli_5 | PEG-DOK-005 | fFq@1QN4MOgoFwLcA3
+nurse_poli_6 | PEG-DOK-006 | 334wxDXNhywAd1qCcQ
+nurse_poli_7 | PEG-DOK-007 | fhSK0KS902FWDq#Mb7

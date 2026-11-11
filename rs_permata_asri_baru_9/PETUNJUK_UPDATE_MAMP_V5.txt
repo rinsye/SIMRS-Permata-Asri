@@ -1,0 +1,57 @@
+SIMRS PERMATA ASRI - PEMBARUAN V5 (MAMP MAC)
+==========================================
+PENTING: Ini adalah update source code untuk proyek yang SUDAH berjalan.
+JANGAN impor ulang database/simrs_permata_asri.sql ke database berisi data aktual.
+JANGAN hapus data atau reset MAMP. Uji dulu di salinan proyek/database.
+
+LANGKAH AMAN
+1. Pada MAMP, hentikan server dan backup folder /Applications/MAMP/htdocs/NAMA_FOLDER_PROYEK.
+2. Start MAMP untuk membuka phpMyAdmin, pilih database aktif > Export > SQL.
+3. Simpan cadangan database dan folder proyek di lokasi lain.
+4. Ekstrak file ini dan salin isinya ke folder proyek lama. Pastikan konfigurasi
+   config/database.php menggunakan parameter yang sudah bekerja pada MAMP Anda.
+5. Buka aplikasi seperti biasa dan login; migrasi skema V5 akan membuat tabel tambahan,
+   menu baru, dan contoh daftar tempat tidur secara non-destruktif.
+6. Data Simulasi telah dinonaktifkan dan dihapus dari navigasi.
+7. Logout lalu login kembali dengan tiap role dan periksa menu/aksi langsung. Akun perawat poli dibuat otomatis per dokter poli; username mengikuti kode pegawai tanpa tanda hubung dan password awal PA!<username>-26. Akun Farmasi demo: pegfar001 / PA!pegfar001-26.
+
+FITUR BARU
+- Kartu ringkasan dan tabel farmasi lebih rapi; satuan/bentuk dipisahkan.
+- Tanggal kadaluwarsa stok awal yang kosong diberi tanggal CONTOH otomatis (bukan
+  hasil verifikasi kemasan!), dengan status merah/kuning untuk peringatan.
+- Peta tempat tidur aktif beserta status terisi/tersedia dan pemilihan berdasarkan
+  bed terdaftar. Lokasi/kapasitas kamar yang dibuat adalah CONTOH sehingga sesuaikan
+  sebelum digunakan pada kondisi lapangan.
+- Pencarian arsip EMR (admin dan petugas rekam medis), lampiran PDF/JPG/PNG yang
+  dibatasi 10MB; akses berkas melewati pemeriksaan login.
+- Petugas rekam medis hanya melihat isi klinis; unggah dokumen penunjang.
+- Laboratorium: CBC per-parameter dan beberapa panel standar, validasi, print
+  gabungan seluruh hasil tervalidasi pasien melalui print browser / Save as PDF.
+- Farmasi: order obat per pasien, mulai proses, checklist, serahkan obat.
+- Admin hanya melihat CPOE, laboratorium, radiologi, farmasi dan order obat.
+- Catatan Keperawatan: input tanda vital dan tindak lanjut keperawatan terpisah dari EMR dokter.
+- Admisi dapat melakukan registrasi pasien dan verifikasi registrasi online.
+- Radiologi: arsip PDF/JPG/PNG dan pencarian hasil berdasarkan pasien/nomor registrasi.
+- Admin hanya unggah scan berkas; tidak dapat mengubah EMR atau triase.
+- Admisi memperoleh menu pendaftaran; akun Farmasi memiliki izin khusus farmasi.
+
+BATASAN PENTING
+- Tidak ada tes integrasi database/server MAMP pada lingkungan pembuatan ini.
+- Tidak boleh dijalankan pada lingkungan pelayanan pasien tanpa evaluasi keamanan,
+  uji peran/izin, uji migrasi, dan validasi alur operasional RS.
+- Peta bed dan tanggal kedaluwarsa yang tidak tersedia sebelumnya dibuat untuk
+  simulasi; harus disesuaikan data operasional nyata.
+- Nilai rujukan pemeriksaan lab adalah ilustrasi. Sesuaikan satuan, nilai rujukan,
+  jenis pemeriksaan, serta validasi tenaga ahli dengan standar lab RS.
+- Alur serah terima obat belum mengurangi stok otomatis; mutasi stok masih melalui
+  fungsi Catat Pergerakan Stok. Hubungkan resep ke item/kode inventaris sebelum
+  mengaktifkan pemotongan stok otomatis.
+- Order obat dengan lebih dari satu item dibaca sebagai satu item per baris teks.
+- File yang terunggah ditempatkan pada private_uploads dengan .htaccess Apache.
+  Pastikan folder tersebut tidak dapat diakses langsung via web dan tidak menerima
+  eksekusi skrip sebelum menggunakan data asli.
+
+FILE UTAMA
+includes/schema_v5.php, includes/functions.php, assets/css/app.css,
+farmasi.php, pharmacy_orders.php, inpatient.php, emr.php, emr_archive.php, emr_file.php, nursing_care.php, laboratory.php,
+lab_print.php, cpoe.php, radiology.php, radiology_file.php dan private_uploads/.htaccess.

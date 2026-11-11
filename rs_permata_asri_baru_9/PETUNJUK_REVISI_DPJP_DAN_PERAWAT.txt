@@ -1,0 +1,14 @@
+REVISI AKSES DPJP DAN PERAWAT — 11 NOVEMBER 2026
+
+- Dashboard dokter menampilkan Daftar Pasien Saya menurut registrations.doctor_employee_id.
+- Kartu statistik DPJP dihitung dari kunjungan dokter sendiri.
+- Perawat poli: hanya kunjungan aktif dokter yang ditugaskan ke perawat melalui nurse_doctor_assignments.
+- Perawat IGD: hanya kunjungan unit IGD yang aktif; riwayat triase juga difilter.
+- Perawat ranap: hanya kunjungan yang memiliki admisi berstatus Dirawat.
+- EMR perawat tidak lagi menampilkan EMR kunjungan lain hanya karena nomor RM sama.
+- Pemeriksaan POST dicocokkan dengan cakupan pasien pada server.
+
+INSTALASI: Backup database dan folder MAMP, ganti file proyek dengan versi ini.
+Jangan impor ulang berkas SQL awal. Logout/login kembali.
+UJI PENTING: Dokter A vs Dokter B; perawat A vs B; pasien poli vs IGD vs ranap; ID registrasi lintas role melalui POST dan URL.
+Batasan: tanpa database MAMP asli, perilaku end-to-end dan integritas data lama tidak dapat dibuktikan. Gunakan hanya untuk lingkungan demo sampai uji keamanan dilakukan.

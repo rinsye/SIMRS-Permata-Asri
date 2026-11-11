@@ -1,0 +1,11 @@
+PEMASANGAN DI MAMP (VERSI DATABASE-DRIVEN SUDAH TERPASANG):
+1. Backup database dan folder proyek.
+2. Impor database/migration_roles_unit_scope_2026.sql melalui phpMyAdmin.
+3. Pasang folder PHP revisi ini ke htdocs, tetap pertahankan config/database.php jika berbeda.
+4. Login administrator, buka Data Pegawai. Gunakan tombol Edit pada Data Pegawai untuk mengganti identitas DEMO dengan identitas yang tepat sebelum digunakan dengan data nyata.
+5. Akun DEMO awal sudah disisipkan pada SQL satu kali. Baca AKUN_DEMO_RAHASIA_BACA_DULU.txt lalu ubah password akun pada penggunaan nyata. Akun baru tetap dapat dibuat dari Pendaftaran Pengguna.
+6. Pada Manajemen Role, setiap perawat poli harus terkait hanya dengan satu dokter. Dokter umum adalah dokter unit Poli Umum; dokter IGD wajib unit IGD dan jadwal IGD.
+7. Uji: dokter IGD tidak boleh melihat registrasi poli, perawat IGD hanya kunjungan IGD aktif, perawat poli hanya pasien dokter pasangannya, rawat inap hanya admisi aktif.
+8. Role Farmasi/Apoteker sudah ada pada migrasi sebelumnya. Farmasi bukan perawat; tidak mendapat akses untuk mengubah EMR/triase.
+PENTING: SQL ini dibuat untuk melengkapi database yang sudah dipasang, bukan untuk menggantikan / mengimpor ulang SQL awal yang mengandung DROP DATABASE.
+Belum ada uji runtime ke database MAMP lokal Anda. Data pasien yang sudah ada tidak dihapus oleh migrasi ini.
